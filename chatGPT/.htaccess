@@ -1,0 +1,5 @@
+Options -Indexes
+DirectoryIndex index.php
+<FilesMatch "^(config\.php|schema\.sql|create_admin_hash\.php)$">
+  Require all denied
+</FilesMatch>

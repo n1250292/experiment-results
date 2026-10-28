@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXURY MOTORS | Premium New Car Experience</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#d4af37',
+                            500: '#c5a028',
+                            600: '#a38118',
+                        },
+                        dark: {
+                            900: '#0b0f19',
+                            800: '#111827',
+                            700: '#1f2937',
+                            600: '#374151'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans JP', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* カスタムスタイリング */
+        body {
+            background-color: #0b0f19;
+            color: #f3f4f6;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .font-serif-title {
+            font-family: 'Cinzel', serif;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fff2a3 0%, #d4af37 50%, #aa7c11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
+            transition: all 0.3s ease;
+        }
+        .gold-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-yellow-500 selection:text-black">
+
+    <!-- ==========================================
+         PHP お問合せ処理（ロリポップ等のPHP環境用）
+         ========================================== -->
+    <?php
+    /* 
+    --- ロリポップサーバー用 PHP送信処理コード (index.phpとして配置した場合に作動) ---
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_inquiry'])) {
+        $name = htmlspecialchars($_POST['name'] ?? '', ENT_QUOTES, 'UTF-8');
+        $email = htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8');
+        $phone = htmlspecialchars($_POST['phone'] ?? '', ENT_QUOTES, 'UTF-8');
+        $car = htmlspecialchars($_POST['car_model'] ?? '', ENT_QUOTES, 'UTF-8');
+        $type = htmlspecialchars($_POST['inquiry_type'] ?? '', ENT_QUOTES, 'UTF-8');
+        $msg = htmlspecialchars($_POST['message'] ?? '', ENT_QUOTES, 'UTF-8');
+
+        $to = "info@your-domain.com"; // 店舗受付用メールアドレスを設定してください
+        $subject = "【LUXURY MOTORS】Webサイトよりお問い合わせ (".$type.")";
+        $body = "ウェブサイトより新しいお問い合わせがありました。\n\n";
+        $body .= "お名前: ".$name." 様\n";
+        $body .= "メールアドレス: ".$email."\n";
+        $body .= "電話番号: ".$phone."\n";
+        $body .= "ご検討車種: ".$car."\n";
+        $body .= "お問い合せ種別: ".$type."\n\n";
+        $body .= "メッセージ本文:\n".$msg."\n";
+
+        $headers = "From: ".$email."\r\n";
+        $headers .= "Reply-To: ".$email."\r\n";
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+        // mail() 関数の実行（ロリポップサーバー標準対応）
+        if(mail($to, $subject, $body, $headers)) {
+            $status_msg = "お問い合わせを受け付けました。担当者より迅速にご連絡いたします。";
+            $status_type = "success";
+        } else {
+            $status_msg = "送信に失敗しました。お電話にて直接お問い合わせください。";
+            $status_type = "error";
+        }
+    }
+    */
+    ?>
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3">
+                <i class="fa-solid fa-crown text-yellow-500 text-2xl"></i>
+                <span class="font-serif-title text-2xl font-bold tracking-widest gold-gradient-text">LUXURY MOTORS</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                <a href="#catalog" class="hover:text-yellow-400 transition-colors">ラインナップ</a>
+                <a href="#simulator" class="hover:text-yellow-400 transition-colors">カラー＆見積シミュレーション</a>
+                <a href="#loan" class="hover:text-yellow-400 transition-colors">ローン計算機</a>
+                <a href="#deploy-guide" class="hover:text-yellow-400 transition-colors text-xs bg-gray-800 px-3 py-1.5 rounded-full text-yellow-500 border border-yellow-500/30">ロリポップ設置ガイド</a>
+                <a href="#contact" class="gold-btn text-black font-semibold px-5 py-2.5 rounded-lg">試乗予約・問合せ</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-300 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-gray-800 px-4 pt-4 pb-6 space-y-4">
+            <a href="#catalog" class="block hover:text-yellow-400 py-2">ラインナップ</a>
+            <a href="#simulator" class="block hover:text-yellow-400 py-2">カラー＆見積シミュレーション</a>
+            <a href="#loan" class="block hover:text-yellow-400 py-2">ローン計算機</a>
+            <a href="#deploy-guide" class="block hover:text-yellow-400 py-2 text-yellow-500">ロリポップ設置ガイド</a>
+            <a href="#contact" class="block gold-btn text-black font-semibold text-center py-3 rounded-lg">試乗予約・問合せ</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20">
+
+        <!-- Hero Section -->
+        <section class="relative h-[85vh] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=2000&q=80" alt="Luxury Car" class="w-full h-full object-cover object-center opacity-40 transform scale-105 transition-transform duration-10000 hover:scale-100">
+                <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent"></div>
+            </div>
+
+            <div class="relative z-10 text-center max-w-4xl px-4 mx-auto">
+                <p class="text-yellow-500 tracking-widest font-serif-title uppercase text-sm mb-3">The Ultimate Driving Experience</p>
+                <h1 class="text-4xl sm:text-6xl font-bold tracking-tight mb-6 font-serif-title leading-tight">
+                    洗練された走りと、<br><span class="gold-gradient-text">至高のステータスをあなたに。</span>
+                </h1>
+                <p class="text-gray-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto font-light">
+                    最高峰の技術と美学が融合した次世代プレミアムサルーン＆SUV。オンラインで理想の1台をシミュレーション・オーダーいただけます。
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#simulator" class="gold-btn text-black font-bold px-8 py-4 rounded-lg text-lg shadow-lg">シミュレーターを試す</a>
+                    <a href="#catalog" class="glass-panel text-white font-medium px-8 py-4 rounded-lg text-lg hover:bg-gray-800 transition">モデル一覧を見る</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catalog Section -->
+        <section id="catalog" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-xs text-yellow-500 font-serif-title tracking-widest uppercase mb-2">MODELS LINEUP</h2>
+                <h3 class="text-3xl sm:text-4xl font-bold font-serif-title">最新カタログ</h3>
+                <div class="w-16 h-0.5 bg-yellow-500 mx-auto mt-4"></div>
+            </div>
+
+            <!-- Vehicle Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="catalog-grid">
+                <!-- JavaScriptで動的生成または静的カード配置 -->
+            </div>
+        </section>
+
+        <!-- Interactive Color & Quote Simulator Section -->
+        <section id="simulator" class="py-24 bg-dark-800/50 border-y border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-xs text-yellow-500 font-serif-title tracking-widest uppercase mb-2">CUSTOMIZE YOUR VEHICLE</h2>
+                    <h3 class="text-3xl sm:text-4xl font-bold font-serif-title">カラー＆見積もりシミュレーター</h3>
+                    <p class="text-gray-400 text-sm mt-2">リアルタイムでリアルなスタイリングと概算お見積もりをご確認いただけます。</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <!-- Left Column: Visualizer SVG/Canvas Canvas Studio -->
+                    <div class="lg:col-span-7 glass-panel p-6 rounded-2xl relative overflow-hidden">
+                        <!-- Simulated Car Visual Studio -->
+                        <div class="relative w-full h-64 sm:h-96 flex items-center justify-center rounded-xl overflow-hidden bg-gradient-to-b from-gray-900 to-black p-4">
+                            <!-- Background Light effect -->
+                            <div class="absolute inset-0 bg-radial-gradient opacity-30"></div>
+                            
+                            <!-- Dynamic SVG Car Vector representation -->
+                            <div class="relative w-full max-w-lg transition-all duration-500">
+                                <svg viewBox="0 0 600 250" class="w-full h-auto filter drop-shadow-[0_15px_15px_rgba(0,0,0,0.8)]">
+                                    <!-- Shadow -->
+                                    <ellipse cx="300" cy="210" rx="260" ry="15" fill="#000" opacity="0.8" />
+                                    
+                                    <!-- Car Body Paintable Base -->
+                                    <path id="car-body" d="M 80 160 L 110 120 C 130 110, 180 80, 240 75 L 370 75 C 430 80, 480 110, 520 140 L 550 160 C 570 165, 580 185, 560 195 L 60 195 C 40 185, 50 165, 80 160 Z" fill="#111827" class="transition-all duration-500" />
+                                    
+                                    <!-- Roof / Pillars -->
+                                    <path d="M 170 110 L 230 82 L 380 82 L 440 115 Z" fill="#0b0f19" opacity="0.9"/>
+                                    
+                                    <!-- Windows -->
+                                    <path d="M 180 108 L 235 86 L 300 86 L 300 108 Z" fill="#38bdf8" opacity="0.4"/>
+                                    <path d="M 310 108 L 310 86 L 375 86 L 430 108 Z" fill="#38bdf8" opacity="0.4"/>
+                                    
+                                    <!-- Headlight & Taillight -->
+                                    <path d="M 520 145 L 555 155 L 525 162 Z" fill="#fef08a" id="car-headlight"/>
+                                    <path d="M 75 150 L 60 155 L 70 165 Z" fill="#ef4444"/>
+
+                                    <!-- Wheels -->
+                                    <g id="wheel-front">
+                                        <circle cx="450" cy="190" r="35" fill="#1f2937" stroke="#4b5563" stroke-width="4"/>
+                                        <circle cx="450" cy="190" r="22" fill="#9ca3af" stroke="#111827" stroke-width="3"/>
+                                        <circle cx="450" cy="190" r="8" fill="#d4af37"/>
+                                    </g>
+                                    <g id="wheel-rear">
+                                        <circle cx="160" cy="190" r="35" fill="#1f2937" stroke="#4b5563" stroke-width="4"/>
+                                        <circle cx="160" cy="190" r="22" fill="#9ca3af" stroke="#111827" stroke-width="3"/>
+                                        <circle cx="160" cy="190" r="8" fill="#d4af37"/>
+                                    </g>
+                                </svg>
+                            </div>
+
+                            <!-- Color Badge Label -->
+                            <div class="absolute top-4 left-4 glass-panel px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-2">
+                                <span id="color-dot" class="w-3 h-3 rounded-full bg-slate-900 border border-white/30"></span>
+                                <span id="color-name-text">クリスタルブラック</span>
+                            </div>
+                        </div>
+
+                        <!-- Color Selector Palette -->
+                        <div class="mt-6">
+                            <label class="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">ボディカラー選択</label>
+                            <div class="flex flex-wrap gap-4" id="color-options">
+                                <!-- JS Dynamic Insertion -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Options & Real-time Quote Form -->
+                    <div class="lg:col-span-5 glass-panel p-6 sm:p-8 rounded-2xl">
+                        <h4 class="text-xl font-bold font-serif-title mb-6 border-b border-gray-800 pb-3 flex justify-between items-center">
+                            <span>見積シミュレーション</span>
+                            <span class="text-xs font-sans text-yellow-500 font-normal">※概算参考価格</span>
+                        </h4>
+
+                        <!-- Model Selector -->
+                        <div class="mb-5">
+                            <label class="block text-xs text-gray-400 mb-2">1. モデル選択</label>
+                            <select id="sim-model-select" class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500 transition">
+                                <!-- Dynamic Options -->
+                            </select>
+                        </div>
+
+                        <!-- Grade Selector -->
+                        <div class="mb-5">
+                            <label class="block text-xs text-gray-400 mb-2">2. グレード / 駆動方式</label>
+                            <select id="sim-grade-select" class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500 transition">
+                                <!-- Dynamic Options -->
+                            </select>
+                        </div>
+
+                        <!-- Options Checkboxes -->
+                        <div class="mb-6">
+                            <label class="block text-xs text-gray-400 mb-2">3. メーカーオプション</label>
+                            <div class="space-y-2.5" id="options-container">
+                                <!-- JS Checkboxes Dynamic -->
+                            </div>
+                        </div>
+
+                        <!-- Price Breakdown Card -->
+                        <div class="bg-dark-900/80 p-4 rounded-xl border border-gray-800 space-y-2 mb-6">
+                            <div class="flex justify-between text-sm text-gray-400">
+                                <span>車両本体価格:</span>
+                                <span id="summary-base-price">¥0</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-400">
+                                <span>オプション合計:</span>
+                                <span id="summary-option-price">¥0</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-400">
+                                <span>諸経費・税金（概算）:</span>
+                                <span id="summary-tax-price">¥0</span>
+                            </div>
+                            <div class="border-t border-gray-800 pt-3 flex justify-between items-end">
+                                <span class="font-bold text-gray-200">お支払総額 (税込):</span>
+                                <span id="summary-total-price" class="text-2xl font-bold font-serif-title gold-gradient-text">¥0</span>
+                            </div>
+                        </div>
+
+                        <button id="btn-apply-quote" class="w-full gold-btn text-black font-bold py-3.5 rounded-lg text-center shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-signature"></i> この仕様で商談・試乗を予約
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loan Calculator Section -->
+        <section id="loan" class="py-20 max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="glass-panel p-8 sm:p-10 rounded-2xl">
+                <div class="text-center mb-10">
+                    <h2 class="text-xs text-yellow-500 font-serif-title tracking-widest uppercase mb-1">FINANCIAL PLANNING</h2>
+                    <h3 class="text-2xl sm:text-3xl font-bold font-serif-title">オートローン支払シミュレーター</h3>
+                    <p class="text-gray-400 text-xs sm:text-sm mt-1">毎月のお支払い予算に合わせて柔軟なプランニングが可能です。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <label class="text-gray-300">頭金 (円)</label>
+                                <span id="loan-downpayment-val" class="text-yellow-500 font-bold">¥1,000,000</span>
+                            </div>
+                            <input type="range" id="loan-downpayment" min="0" max="10000000" step="100000" value="1000000" class="w-full accent-yellow-500 bg-gray-700 rounded-lg cursor-pointer">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <label class="text-gray-300">支払い回数</label>
+                                <span id="loan-months-val" class="text-yellow-500 font-bold">60 回 (5年)</span>
+                            </div>
+                            <select id="loan-months" class="w-full bg-dark-900 border border-gray-700 rounded-lg p-3 text-white">
+                                <option value="24">24 回 (2年)</option>
+                                <option value="36">36 回 (3年)</option>
+                                <option value="48">48 回 (4年)</option>
+                                <option value="60" selected>60 回 (5年)</option>
+                                <option value="72">72 回 (6年)</option>
+                                <option value="84">84 回 (7年)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <label class="text-gray-300">実質年率 (%)</label>
+                                <span id="loan-rate-val" class="text-yellow-500 font-bold">2.9%</span>
+                            </div>
+                            <input type="range" id="loan-rate" min="0.9" max="7.9" step="0.1" value="2.9" class="w-full accent-yellow-500 bg-gray-700 rounded-lg cursor-pointer">
+                        </div>
+                    </div>
+
+                    <!-- Output Panel -->
+                    <div class="bg-dark-900 p-6 rounded-xl border border-gray-800 text-center space-y-4">
+                        <span class="text-xs uppercase tracking-wider text-gray-400">月々のお支払い額（概算）</span>
+                        <div id="loan-monthly-payment" class="text-4xl font-extrabold font-serif-title gold-gradient-text">
+                            ¥0
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 text-xs text-gray-400 space-y-1 text-left">
+                            <div class="flex justify-between">
+                                <span>ローン対象額 (元金):</span>
+                                <span id="loan-principal-display" class="text-gray-200">¥0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>分割払手数料合計:</span>
+                                <span id="loan-interest-display" class="text-gray-200">¥0</span>
+                            </div>
+                            <div class="flex justify-between font-bold text-gray-200 pt-1">
+                                <span>お支払総額 (手数料込):</span>
+                                <span id="loan-total-display">¥0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lolipop Deploy Guide Section (For Developers/Operators) -->
+        <section id="deploy-guide" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel p-8 rounded-2xl border border-yellow-500/20">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fa-solid fa-server text-yellow-500 text-2xl"></i>
+                    <h3 class="text-2xl font-bold font-serif-title">ロリポップ！サーバーへのデプロイ・運用手順</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-300">
+                    <div class="bg-dark-900 p-5 rounded-xl border border-gray-800">
+                        <span class="text-yellow-500 font-bold block mb-2">STEP 1: ファイル名の変更</span>
+                        <p class="text-xs leading-relaxed text-gray-400">
+                            本ファイルを <code class="text-yellow-400 bg-black px-1 py-0.5 rounded">index.php</code> という名称で保存してください。ロリポップのPHP実行環境で問い合わせ機能（mail関数）がそのまま利用可能です。
+                        </p>
+                    </div>
+
+                    <div class="bg-dark-900 p-5 rounded-xl border border-gray-800">
+                        <span class="text-yellow-500 font-bold block mb-2">STEP 2: FTPアップロード</span>
+                        <p class="text-xs leading-relaxed text-gray-400">
+                            ロリポップの「ロリポップ！FTP」またはFileZilla等を使用し、公開ディレクトリ（<code class="text-yellow-400 bg-black px-1 py-0.5 rounded">web/</code>等）に直接ファイルをアップロードします。
+                        </p>
+                    </div>
+
+                    <div class="bg-dark-900 p-5 rounded-xl border border-gray-800">
+                        <span class="text-yellow-500 font-bold block mb-2">STEP 3: メール送信設定</span>
+                        <p class="text-xs leading-relaxed text-gray-400">
+                            コード冒頭の <code class="text-yellow-400 bg-black px-1 py-0.5 rounded">$to = "..."</code> のメールアドレスをご自身の店舗用受信アドレスに書き換えてご利用ください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Reservation Form -->
+        <section id="contact" class="py-24 max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="glass-panel p-8 sm:p-12 rounded-2xl">
+                <div class="text-center mb-10">
+                    <h2 class="text-xs text-yellow-500 font-serif-title tracking-widest uppercase mb-1">INQUIRY & TEST DRIVE</h2>
+                    <h3 class="text-3xl font-bold font-serif-title">試乗予約・購入お問合せ</h3>
+                    <p class="text-gray-400 text-sm mt-2">ご希望の車種やシミュレーション内容のお問合せ・ご相談を承ります。</p>
+                </div>
+
+                <form id="inquiry-form" method="POST" action="" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-2">お名前 <span class="text-red-500">*</span></label>
+                            <input type="text" name="name" required placeholder="山田 太郎" class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-2">メールアドレス <span class="text-red-500">*</span></label>
+                            <input type="email" name="email" required placeholder="example@luxury.com" class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-2">電話番号</label>
+                            <input type="tel" name="phone" placeholder="090-1234-5678" class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-2">お問い合わせ種別 <span class="text-red-500">*</span></label>
+                            <select name="inquiry_type" required class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500">
+                                <option value="試乗予約">試乗予約</option>
+                                <option value="見積商談">新車購入・見積もり相談</option>
+                                <option value="カタログ請求">カタログ請求</option>
+                                <option value="その他">その他お問い合わせ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-2">ご検討中の車種</label>
+                        <input type="text" id="contact-car-model" name="car_model" placeholder="シミュレーターで選択した車種が自動入力されます" class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-2">ご要望・ご質問メッセージ</label>
+                        <textarea id="contact-message" name="message" rows="4" placeholder="ご希望の日時やカスタムオプションに関するご質問などをご入力ください。" class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500"></textarea>
+                    </div>
+
+                    <button type="submit" name="submit_inquiry" class="w-full gold-btn text-black font-bold py-4 rounded-lg text-lg shadow-xl">
+                        送信する
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-gray-800 py-12 text-gray-500 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-crown text-yellow-500 text-xl"></i>
+                <span class="font-serif-title font-bold text-lg text-white">LUXURY MOTORS</span>
+            </div>
+            <p class="text-xs">&copy; 2026 LUXURY MOTORS Inc. All Rights Reserved. (Lolipop PHP Ready Demo Application)</p>
+            <div class="flex space-x-6 text-gray-400">
+                <a href="#" class="hover:text-yellow-500"><i class="fa-brands fa-instagram text-lg"></i></a>
+                <a href="#" class="hover:text-yellow-500"><i class="fa-brands fa-facebook text-lg"></i></a>
+                <a href="#" class="hover:text-yellow-500"><i class="fa-brands fa-youtube text-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Toast Modal -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 glass-panel border border-yellow-500/50 p-4 rounded-xl shadow-2xl flex items-center gap-3 max-w-md">
+        <i class="fa-solid fa-circle-check text-yellow-500 text-xl"></i>
+        <span id="toast-message" class="text-sm text-gray-200"></span>
+    </div>
+
+    <!-- JavaScript Data and Application Logic -->
+    <script>
+        // Data Structure for Vehicles & Configs
+        const carData = [
+            {
+                id: 'apex-gt',
+                name: 'APEX GT Saloon',
+                tagline: 'フラッグシップ・ラグジュアリーセダン',
+                basePrice: 12500000,
+                image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80',
+                grades: [
+                    { id: 'standard', name: 'Standard AWD', priceOffset: 0 },
+                    { id: 'first-class', name: 'First Class Lounge', priceOffset: 1500000 },
+                    { id: 'performance', name: 'V8 Turbo Performance', priceOffset: 3200000 }
+                ]
+            },
+            {
+                id: 'vanguard-x',
+                name: 'VANGUARD X SUV',
+                tagline: '全地形対応型 プレミアムSUV',
+                basePrice: 14800000,
+                image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=800&q=80',
+                grades: [
+                    { id: 'standard', name: 'Luxury Package 4WD', priceOffset: 0 },
+                    { id: 'offroad', name: 'Terrain Master Spec', priceOffset: 1200000 },
+                    { id: 'hybrid', name: 'PHEV Executive', priceOffset: 2100000 }
+                ]
+            },
+            {
+                id: 'e-spectre',
+                name: 'E-SPECTRE Roadster',
+                tagline: '次世代 ピュアEVスポーツクーペ',
+                basePrice: 18900000,
+                image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80',
+                grades: [
+                    { id: 'single', name: 'Rear-Drive Launch Ed.', priceOffset: 0 },
+                    { id: 'dual-motor', name: 'Dual-Motor Performance', priceOffset: 2500000 }
+                ]
+            }
+        ];
+
+        const colorPalette = [
+            { id: 'black', name: 'クリスタルブラック', hex: '#111827', svgFill: '#111827' },
+            { id: 'white', name: 'パールホワイト', hex: '#f8fafc', svgFill: '#e2e8f0' },
+            { id: 'silver', name: 'チタニウムシルバー', hex: '#94a3b8', svgFill: '#64748b' },
+            { id: 'red', name: 'クリムゾンレッド', hex: '#991b1b', svgFill: '#b91c1c' },
+            { id: 'blue', name: 'ミッドナイトブルー', hex: '#1e3a8a', svgFill: '#1d4ed8' },
+            { id: 'gold', name: 'シャンパンゴールド', hex: '#d4af37', svgFill: '#c5a028' }
+        ];
+
+        const availableOptions = [
+            { id: 'pano-roof', name: 'パノラマガラスサンルーフ', price: 250000 },
+            { id: 'audio', name: 'プレミアム3Dサラウンドサウンド', price: 380000 },
+            { id: 'leather', name: '最高級ナッパレザーインテリア', price: 520000 },
+            { id: 'ai-drive', name: '高度自動運転支援アシスト', price: 450000 }
+        ];
+
+        // State Management
+        let currentSelection = {
+            carId: carData[0].id,
+            gradeIndex: 0,
+            color: colorPalette[0],
+            selectedOptions: ['audio']
+        };
+
+        // Initialize UI Elements
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCatalog();
+            renderColorOptions();
+            renderSimulatorDropdowns();
+            renderOptionCheckboxes();
+            updateSimulator();
+            setupLoanCalculator();
+            setupEventListeners();
+        });
+
+        // 1. Render Catalog Cards
+        function renderCatalog() {
+            const grid = document.getElementById('catalog-grid');
+            grid.innerHTML = carData.map(car => `
+                <div class="glass-panel rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="h-52 overflow-hidden relative">
+                            <img src="${car.image}" alt="${car.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute bottom-2 right-2 bg-black/70 backdrop-blur px-2.5 py-1 rounded text-xs text-yellow-400 font-serif-title">
+                                NEW MODEL
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold font-serif-title mb-1">${car.name}</h4>
+                            <p class="text-xs text-gray-400 mb-4">${car.tagline}</p>
+                            <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">車両本体価格</p>
+                            <p class="text-2xl font-bold font-serif-title gold-gradient-text">
+                                ¥${car.basePrice.toLocaleString()} <span class="text-xs font-normal text-gray-400">〜(税込)</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="selectCarForSim('${car.id}')" class="w-full bg-dark-900 border border-yellow-500/30 hover:bg-yellow-500 hover:text-black text-yellow-500 font-medium py-2.5 rounded-lg text-sm transition-all text-center">
+                            この車種をカスタマイズ
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 2. Render Color Options
+        function renderColorOptions() {
+            const container = document.getElementById('color-options');
+            container.innerHTML = colorPalette.map(c => `
+                <button onclick="changeColor('${c.id}')" title="${c.name}" 
+                    class="w-10 h-10 rounded-full border-2 transition-all flex items-center justify-center ${currentSelection.color.id === c.id ? 'border-yellow-500 scale-110 shadow-lg' : 'border-gray-700 hover:scale-105'}"
+                    style="background-color: ${c.hex}">
+                </button>
+            `).join('');
+        }
+
+        // 3. Dropdowns Initialization
+        function renderSimulatorDropdowns() {
+            const modelSelect = document.getElementById('sim-model-select');
+            modelSelect.innerHTML = carData.map(car => `
+                <option value="${car.id}" ${car.id === currentSelection.carId ? 'selected' : ''}>${car.name}</option>
+            `).join('');
+
+            updateGradeDropdown();
+        }
+
+        function updateGradeDropdown() {
+            const car = carData.find(c => c.id === currentSelection.carId);
+            const gradeSelect = document.getElementById('sim-grade-select');
+            gradeSelect.innerHTML = car.grades.map((g, idx) => `
+                <option value="${idx}" ${idx === currentSelection.gradeIndex ? 'selected' : ''}>
+                    ${g.name} (+¥${g.priceOffset.toLocaleString()})
+                </option>
+            `).join('');
+        }
+
+        // 4. Option Checkboxes
+        function renderOptionCheckboxes() {
+            const container = document.getElementById('options-container');
+            container.innerHTML = availableOptions.map(opt => `
+                <label class="flex items-center justify-between p-3 bg-dark-900/60 rounded-lg border border-gray-800 cursor-pointer hover:border-gray-700 transition">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" value="${opt.id}" ${currentSelection.selectedOptions.includes(opt.id) ? 'checked' : ''} 
+                            onchange="toggleOption('${opt.id}')"
+                            class="w-4 h-4 accent-yellow-500 bg-gray-800 rounded">
+                        <span class="text-xs text-gray-200">${opt.name}</span>
+                    </div>
+                    <span class="text-xs text-yellow-500/80 font-medium">+¥${opt.price.toLocaleString()}</span>
+                </label>
+            `).join('');
+        }
+
+        // Interactive Handlers
+        function changeColor(colorId) {
+            currentSelection.color = colorPalette.find(c => c.id === colorId);
+            renderColorOptions();
+            
+            // SVG Car Body Color Animated Update
+            document.getElementById('car-body').setAttribute('fill', currentSelection.color.svgFill);
+            document.getElementById('color-dot').style.backgroundColor = currentSelection.color.hex;
+            document.getElementById('color-name-text').innerText = currentSelection.color.name;
+        }
+
+        function toggleOption(optId) {
+            const index = currentSelection.selectedOptions.indexOf(optId);
+            if (index > -1) {
+                currentSelection.selectedOptions.splice(index, 1);
+            } else {
+                currentSelection.selectedOptions.push(optId);
+            }
+            updateSimulator();
+        }
+
+        function selectCarForSim(carId) {
+            currentSelection.carId = carId;
+            currentSelection.gradeIndex = 0;
+            document.getElementById('sim-model-select').value = carId;
+            updateGradeDropdown();
+            updateSimulator();
+            
+            // Smooth Scroll to Simulator
+            document.getElementById('simulator').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Calculation Core
+        function updateSimulator() {
+            const car = carData.find(c => c.id === currentSelection.carId);
+            const grade = car.grades[currentSelection.gradeIndex];
+            
+            const basePrice = car.basePrice + grade.priceOffset;
+            const optionPrice = currentSelection.selectedOptions.reduce((sum, optId) => {
+                const opt = availableOptions.find(o => o.id === optId);
+                return sum + (opt ? opt.price : 0);
+            }, 0);
+            
+            const taxAndFees = Math.round((basePrice + optionPrice) * 0.07); // 7% 概算諸経費・税金
+            const totalPrice = basePrice + optionPrice + taxAndFees;
+
+            // DOM Update
+            document.getElementById('summary-base-price').innerText = `¥${basePrice.toLocaleString()}`;
+            document.getElementById('summary-option-price').innerText = `¥${optionPrice.toLocaleString()}`;
+            document.getElementById('summary-tax-price').innerText = `¥${taxAndFees.toLocaleString()}`;
+            document.getElementById('summary-total-price').innerText = `¥${totalPrice.toLocaleString()}`;
+
+            // Sync with Loan Calc
+            calculateLoan(totalPrice);
+        }
+
+        // Loan Calculator Logic
+        function setupLoanCalculator() {
+            document.getElementById('loan-downpayment').addEventListener('input', (e) => {
+                document.getElementById('loan-downpayment-val').innerText = `¥${parseInt(e.target.value).toLocaleString()}`;
+                updateSimulator();
+            });
+            document.getElementById('loan-months').addEventListener('change', () => updateSimulator());
+            document.getElementById('loan-rate').addEventListener('input', (e) => {
+                document.getElementById('loan-rate-val').innerText = `${e.target.value}%`;
+                updateSimulator();
+            });
+        }
+
+        function calculateLoan(totalCarPrice) {
+            const downpayment = parseInt(document.getElementById('loan-downpayment').value) || 0;
+            const months = parseInt(document.getElementById('loan-months').value);
+            const annualRate = parseFloat(document.getElementById('loan-rate').value) / 100;
+
+            const principal = Math.max(0, totalCarPrice - downpayment);
+            
+            if (principal === 0) {
+                document.getElementById('loan-monthly-payment').innerText = "¥0";
+                document.getElementById('loan-principal-display').innerText = "¥0";
+                document.getElementById('loan-interest-display').innerText = "¥0";
+                document.getElementById('loan-total-display').innerText = `¥${downpayment.toLocaleString()}`;
+                return;
+            }
+
+            // 月利計算
+            const monthlyRate = annualRate / 12;
+            const monthlyPayment = Math.round((principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1));
+            const totalRepayment = monthlyPayment * months;
+            const totalInterest = totalRepayment - principal;
+
+            document.getElementById('loan-monthly-payment').innerText = `¥${monthlyPayment.toLocaleString()} /月`;
+            document.getElementById('loan-principal-display').innerText = `¥${principal.toLocaleString()}`;
+            document.getElementById('loan-interest-display').innerText = `¥${totalInterest.toLocaleString()}`;
+            document.getElementById('loan-total-display').innerText = `¥${(totalRepayment + downpayment).toLocaleString()}`;
+        }
+
+        // Dynamic Event Handlers
+        function setupEventListeners() {
+            // Model Select Event
+            document.getElementById('sim-model-select').addEventListener('change', (e) => {
+                currentSelection.carId = e.value;
+                currentSelection.gradeIndex = 0;
+                updateGradeDropdown();
+                updateSimulator();
+            });
+
+            // Grade Select Event
+            document.getElementById('sim-grade-select').addEventListener('change', (e) => {
+                currentSelection.gradeIndex = parseInt(e.target.value);
+                updateSimulator();
+            });
+
+            // Apply Quote to Form Button
+            document.getElementById('btn-apply-quote').addEventListener('click', () => {
+                const car = carData.find(c => c.id === currentSelection.carId);
+                const grade = car.grades[currentSelection.gradeIndex];
+                const total = document.getElementById('summary-total-price').innerText;
+
+                const carInput = document.getElementById('contact-car-model');
+                const messageInput = document.getElementById('contact-message');
+
+                carInput.value = `${car.name} (${grade.name}) - カラー: ${currentSelection.color.name}`;
+                messageInput.value = `【シミュレーション見積り内容】\n概算お支払総額: ${total}\n選択オプション: ${currentSelection.selectedOptions.map(o => availableOptions.find(opt => opt.id === o).name).join(', ') || 'なし'}\n\n上記仕様で試乗・詳細見積もりのご相談を希望します。`;
+
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+                showToast("見積仕様をお問合せフォームに反映しました");
+            });
+
+            // Mobile Navigation Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Form Submit Intercept (Demo UX)
+            document.getElementById('inquiry-form').addEventListener('submit', (e) => {
+                // PHP環境で機能させる場合はpreventDefaultを外すことができますが、フロントデモ用に通知を表示
+                showToast("お問い合わせ・試乗予約を受け付けました。");
+            });
+        }
+
+        // Toast Notification Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-message');
+            msgEl.innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
